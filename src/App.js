@@ -1,7 +1,12 @@
 import React from "react";
-import { signOut } from "./auth/index";
-import { exampleDispacth } from "./store/actionCreators/user";
+import { singIn } from "./store/actionCreators/user";
 import { useDispatch, useSelector } from "react-redux";
+
+import { Switch, Route } from "react-router-dom";
+
+import SignIn from "./components/SignIn/SignIn";
+import Dashbaord from "./components/Dashboard/Dashboard";
+import NotFound from "./components/NotFound/NotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -9,22 +14,13 @@ function App() {
 
   return (
     <div className="App">
-      {user && (
-        <div>
-          <h1 style={{ margin: 0, padding: 0 }}>{user.displayName}</h1>
-          <img
-            alt={user.displayName}
-            src={user.photoURL}
-            style={{ margin: 15 }}
-          />
-        </div>
-      )}
-
-      {user ? (
-        <button onClick={() => signOut(dispatch)}>Sign Out</button>
-      ) : (
-        <button onClick={() => dispatch(exampleDispacth())}>Sign In</button>
-      )}
+      <Switch>
+        <Route path="/" exact component={SignIn} />
+        <Route path="/signin" exact component={SignIn} />
+        <Route path="/dashboard" exact component={Dashbaord} />
+        <Route path="/signin" exact component={SignIn} />
+        <Route component={NotFound} />
+      </Switch>
     </div>
   );
 }
